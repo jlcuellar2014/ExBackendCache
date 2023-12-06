@@ -6,38 +6,48 @@ namespace CacheInMemory.Cache
 {
     public class CacheContext(IMemoryCache cache, IDataContext dbContext, IConfiguration configuration) : ICacheContext
     {
-        private static List<Country>? countries;
+        private List<Country>? countries;
+        private List<Branch>? branches;
 
         public List<Country> Countries
         {
-            get => GetCountries() ?? [];
+            get {
+                LoadDataFromCache<Country>("countries", ref countries, () => dbContext.Countries.ToList());
+                return countries ?? [];
+            }
             set => countries = value;
         }
 
-        private List<Country>? GetCountries()
+        public List<Branch> Branches
         {
-            var key = "countries";
-
-            if (!cache.TryGetValue(key, out string? countriesInCache))
+            get
             {
-                countries = [.. dbContext.Countries];
+                LoadDataFromCache<Branch>("branches", ref branches, () => dbContext.Branches.ToList());
+                return branches ?? [];
+            }
+            set => branches = value;
+        }
+
+        private void LoadDataFromCache<T>(string key, ref List<T>? collection,  Func<List<T>?> func)
+        {
+            if (!cache.TryGetValue(key, out string? dataInCache))
+            {
+                collection = func.Invoke() ?? [];
 
                 var cacheEntryOptions = new MemoryCacheEntryOptions
                 {
                     AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(
-                        double.TryParse(configuration["Cache:LiveInMinutes"], out double time) ? time : 10)
+                       double.TryParse(configuration["Cache:LiveInMinutes"], out double time) ? time : 10)
                 };
 
-                var data = JsonSerializer.Serialize<List<Country>>(countries);
+                var data = JsonSerializer.Serialize(collection);
 
                 cache.Set(key, data, cacheEntryOptions);
-
-                return countries;
             }
-
-            countries ??= JsonSerializer.Deserialize<List<Country>>(countriesInCache ?? string.Empty);
-
-            return countries;
+            else
+            {
+                collection ??= JsonSerializer.Deserialize<List<T>>(dataInCache ?? string.Empty);
+            }
         }
     }
 }
