@@ -7,9 +7,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddMemoryCache();
-builder.Services.AddTransient<IDataContext, DatabaseContext>();
-builder.Services.AddTransient<ICacheContext, CacheContext>();
-builder.Services.AddTransient<ICountriesService, CountriesService>();
+builder.Services.AddScoped<IDataContext, DatabaseContext>();
+builder.Services.AddScoped<ICacheContext, CacheContext>();
+builder.Services.AddScoped<ICountriesService, CountriesService>();
+builder.Services.AddScoped<IBranchesService, BranchesService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

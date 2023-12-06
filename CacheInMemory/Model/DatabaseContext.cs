@@ -15,6 +15,9 @@ namespace CacheInMemory.Model
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Country>().HasKey(o => o.CountryCode);
+            modelBuilder.Entity<Branch>().HasIndex(e => e.Name).IsUnique();
         }
+
+        public async Task SaveChangesAsync() => await base.SaveChangesAsync();
     }
 }

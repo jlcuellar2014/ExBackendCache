@@ -6,30 +6,29 @@ namespace CacheInMemory.Cache
 {
     public class CacheContext(IMemoryCache cache, IDataContext dbContext, IConfiguration configuration) : ICacheContext
     {
-        private List<Country>? countries;
-        private List<Branch>? branches;
+        private static List<Country>? countries;
+        private static List<Branch>? branches;
 
-        public List<Country> Countries
-        {
+        public List<Country> Countries {
             get {
-                LoadDataFromCache<Country>("countries", ref countries, () => dbContext.Countries.ToList());
+                countries = GetDataFromCache<Country>(countries, () => dbContext.Countries.ToList());
                 return countries ?? [];
-            }
-            set => countries = value;
+            } 
         }
-
-        public List<Branch> Branches
-        {
-            get
-            {
-                LoadDataFromCache<Branch>("branches", ref branches, () => dbContext.Branches.ToList());
+        public List<Branch> Branches {
+            get {
+                branches = GetDataFromCache<Branch>(branches, () => dbContext.Branches.ToList());
                 return branches ?? [];
             }
-            set => branches = value;
         }
 
-        private void LoadDataFromCache<T>(string key, ref List<T>? collection,  Func<List<T>?> func)
+        public void CleanCountriesCache() => cache.Remove(nameof(Country));
+        public void CleanBranchesCache() => cache.Remove(nameof(Branch));
+
+        private List<T>? GetDataFromCache<T>(List<T>? collection,  Func<List<T>?> func)
         {
+            var key = nameof(T);
+
             if (!cache.TryGetValue(key, out string? dataInCache))
             {
                 collection = func.Invoke() ?? [];
@@ -44,10 +43,13 @@ namespace CacheInMemory.Cache
 
                 cache.Set(key, data, cacheEntryOptions);
             }
-            else
+
+            if (collection == null || !collection.Any())
             {
-                collection ??= JsonSerializer.Deserialize<List<T>>(dataInCache ?? string.Empty);
+                collection = JsonSerializer.Deserialize<List<T>>(dataInCache ?? string.Empty);
             }
+
+            return collection;
         }
     }
 }

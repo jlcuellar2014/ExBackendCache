@@ -1,4 +1,4 @@
-﻿using CacheInMemory.Cache;
+﻿using CacheInMemory.DTOs;
 using CacheInMemory.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,9 +9,16 @@ namespace CacheInMemory.Controllers
     public class CountriesController(ICountriesService service) : ControllerBase
     {
         [HttpGet]
-        public IActionResult Get()
+        public ActionResult<List<CountryDTO>> Get()
         {
-            return Ok(service.GetCountriesAsync());
+            try
+            {
+                return Ok(service.GetCountriesAsync());
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
         }
     }
 }
