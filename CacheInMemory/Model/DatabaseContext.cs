@@ -2,7 +2,7 @@
 
 namespace CacheInMemory.Model
 {
-    public class CarRegistryContext(IConfiguration configuration): DbContext
+    public class DatabaseContext(IConfiguration configuration) : DbContext, IDataContext
     {
         public DbSet<Country> Countries { get; set; }
         public DbSet<Branch> Branches { get; set; }
