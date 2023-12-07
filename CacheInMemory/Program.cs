@@ -11,6 +11,8 @@ builder.Services.AddScoped<IDataContext, DatabaseContext>();
 builder.Services.AddScoped<ICacheContext, CacheContext>();
 builder.Services.AddScoped<ICountriesService, CountriesService>();
 builder.Services.AddScoped<IBranchesService, BranchesService>();
+builder.Services.AddScoped<ICarsService, CarsService>();
+builder.Services.AddScoped<IRegisteredCarsService, RegisteredCarsService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

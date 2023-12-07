@@ -6,8 +6,12 @@ namespace CacheInMemory.Cache
     {
         List<Country> Countries { get; }
         List<Branch> Branches { get; }
+        List<Car> Cars { get; }
+        List<RegisteredCar> RegisteredCars { get; }
 
         void CleanCountriesCache();
         void CleanBranchesCache();
+        void CleanCarsCache();
+        void CleanRegisteredCarCache();
     }
 }

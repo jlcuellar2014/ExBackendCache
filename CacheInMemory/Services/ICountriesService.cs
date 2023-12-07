@@ -1,9 +1,10 @@
-﻿using CacheInMemory.Model;
+﻿using CacheInMemory.DTOs;
+using CacheInMemory.Model;
 
 namespace CacheInMemory.Services
 {
     public interface ICountriesService
     {
-        Task<List<Country>> GetCountriesAsync();
+        List<CountryReadDTO> GetCountries();
     }
 }

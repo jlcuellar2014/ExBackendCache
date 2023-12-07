@@ -6,14 +6,27 @@ namespace CacheInMemory.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BranchesController(IBranchesService service) : ControllerBase
+    public class CarsController(ICarsService service) : ControllerBase
     {
         [HttpGet]
-        public ActionResult<List<BranchReadDTO>> Get()
+        public ActionResult<List<CarReadDTO>> Get()
         {
             try
             {
-                return Ok(service.GetBranches());
+                return Ok(service.GetCars());
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpGet("search")]
+        public ActionResult<List<CarReadDTO>> GetByParams([FromQuery] CarSearchingDTO carSearching)
+        {
+            try
+            {
+                return Ok(service.GetCarsByParams(carSearching));
             }
             catch (Exception)
             {
@@ -22,25 +35,11 @@ namespace CacheInMemory.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> PostAsync(BranchCreateDTO branch)
+        public async Task<ActionResult<List<CarReadDTO>>> PostAsync(CarCreateDTO car)
         {
             try
             {
-                await service.CreateBranchAsync(branch);
-                return Ok();
-            }
-            catch (Exception)
-            {
-                return BadRequest();
-            }
-        }
-
-        [HttpPatch("{branchName}")]
-        public async Task<ActionResult> PatchAsync(string branchName, BranchUpdateDTO branch)
-        {
-            try
-            {
-                await service.UpdateBranchAsync(branchName, branch);
+                await service.CreateCarAsync(car);
                 return Ok();
             }
             catch (ArgumentException ex)
@@ -53,12 +52,12 @@ namespace CacheInMemory.Controllers
             }
         }
 
-        [HttpDelete("{branchName}")]
-        public async Task<ActionResult> PatchAsync(string branchName)
+        [HttpPatch("{carId}")]
+        public async Task<ActionResult<List<CarReadDTO>>> PatchAsync(int carId, CarUpdateDTO car)
         {
             try
             {
-                await service.DeleteBranchAsync(branchName);
+                await service.UpdateCarAsync(carId, car);
                 return Ok();
             }
             catch (ArgumentException ex)

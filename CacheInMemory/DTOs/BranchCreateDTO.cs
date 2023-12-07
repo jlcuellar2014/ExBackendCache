@@ -1,6 +1,6 @@
 ﻿namespace CacheInMemory.DTOs
 {
-    public class BranchDTO
+    public class BranchCreateDTO
     {
         public required string Name { get; set; }
         public string? Description { get; set; }

@@ -8,6 +8,8 @@ namespace CacheInMemory.Cache
     {
         private static List<Country>? countries;
         private static List<Branch>? branches;
+        private static List<Car>? cars;
+        private static List<RegisteredCar>? registeredCars;
 
         public List<Country> Countries {
             get {
@@ -21,13 +23,31 @@ namespace CacheInMemory.Cache
                 return branches ?? [];
             }
         }
+        public List<Car> Cars
+        {
+            get
+            {
+                cars = GetDataFromCache<Car>(cars, () => dbContext.Cars.ToList());
+                return cars ?? [];
+            }
+        }
+        public List<RegisteredCar> RegisteredCars
+        {
+            get
+            {
+                registeredCars = GetDataFromCache<RegisteredCar>(registeredCars, () => dbContext.RegisteredCars.ToList());
+                return registeredCars ?? [];
+            }
+        }
 
         public void CleanCountriesCache() => cache.Remove(nameof(Country));
         public void CleanBranchesCache() => cache.Remove(nameof(Branch));
+        public void CleanCarsCache() => cache.Remove(nameof(Car));
+        public void CleanRegisteredCarCache() => cache.Remove(nameof(RegisteredCar));
 
         private List<T>? GetDataFromCache<T>(List<T>? collection,  Func<List<T>?> func)
         {
-            var key = nameof(T);
+            var key = typeof(T).Name;
 
             if (!cache.TryGetValue(key, out string? dataInCache))
             {
@@ -39,14 +59,19 @@ namespace CacheInMemory.Cache
                        double.TryParse(configuration["Cache:LiveInMinutes"], out double time) ? time : 10)
                 };
 
-                var data = JsonSerializer.Serialize(collection);
+                if (collection.Any())
+                {
+                    var data = JsonSerializer.Serialize(collection);
 
-                cache.Set(key, data, cacheEntryOptions);
+                    cache.Set(key, data, cacheEntryOptions);
+                }
             }
 
             if (collection == null || !collection.Any())
             {
-                collection = JsonSerializer.Deserialize<List<T>>(dataInCache ?? string.Empty);
+                string data = dataInCache ?? string.Empty;
+
+                collection = data.Any() ? JsonSerializer.Deserialize<List<T>>(data) : [];
             }
 
             return collection;

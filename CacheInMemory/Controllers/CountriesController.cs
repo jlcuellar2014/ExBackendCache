@@ -9,11 +9,11 @@ namespace CacheInMemory.Controllers
     public class CountriesController(ICountriesService service) : ControllerBase
     {
         [HttpGet]
-        public ActionResult<List<CountryDTO>> Get()
+        public ActionResult<List<CountryReadDTO>> Get()
         {
             try
             {
-                return Ok(service.GetCountriesAsync());
+                return Ok(service.GetCountries());
             }
             catch (Exception)
             {

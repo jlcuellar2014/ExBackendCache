@@ -1,10 +1,12 @@
 ﻿using CacheInMemory.Cache;
+using CacheInMemory.DTOs;
 using CacheInMemory.Model;
+using Mapster;
 
 namespace CacheInMemory.Services
 {
     public class CountriesService(ICacheContext cache) : ICountriesService
     {
-        public async Task<List<Country>> GetCountriesAsync() => cache.Countries;
+        public List<CountryReadDTO> GetCountries() => cache.Countries.Adapt<List<CountryReadDTO>>();
     }
 }
