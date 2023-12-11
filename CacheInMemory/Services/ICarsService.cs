@@ -4,10 +4,10 @@ namespace CacheInMemory.Services
 {
     public interface ICarsService
     {
-        Task CreateCarAsync(CarCreateDTO car);
-        Task DeleteCarAsync(int cardId, CarCreateDTO car);
-        Task<List<CarReadDTO>> GetCarsAsync();
-        Task<List<CarReadDTO>> GetCarsByParamsAsync(CarSearchingDTO carSearching);
-        Task UpdateCarAsync(int cardId, CarUpdateDTO car);
+        Task CreateAsync(CarCreateDTO car);
+        Task DeleteAsync(int cardId);
+        Task<List<CarReadDTO>> GetAsync();
+        Task<List<CarReadDTO>> GetByParamsAsync(CarSearchingDTO carSearching);
+        Task UpdateAsync(int cardId, CarUpdateDTO car);
     }
 }

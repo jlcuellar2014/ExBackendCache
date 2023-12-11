@@ -13,7 +13,7 @@ namespace CacheInMemory.Controllers
         {
             try
             {
-                return Ok(await service.GetCarsAsync());
+                return Ok(await service.GetAsync());
             }
             catch (Exception)
             {
@@ -26,7 +26,7 @@ namespace CacheInMemory.Controllers
         {
             try
             {
-                return Ok(await service.GetCarsByParamsAsync(carSearching));
+                return Ok(await service.GetByParamsAsync(carSearching));
             }
             catch (Exception)
             {
@@ -39,7 +39,7 @@ namespace CacheInMemory.Controllers
         {
             try
             {
-                await service.CreateCarAsync(car);
+                await service.CreateAsync(car);
                 return Ok();
             }
             catch (ArgumentException ex)
@@ -57,7 +57,7 @@ namespace CacheInMemory.Controllers
         {
             try
             {
-                await service.UpdateCarAsync(carId, car);
+                await service.UpdateAsync(carId, car);
                 return Ok();
             }
             catch (ArgumentException ex)

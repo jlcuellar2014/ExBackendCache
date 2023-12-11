@@ -13,7 +13,7 @@ namespace CacheInMemory.Services
             if (!registries.Any())
                 return [];
 
-            var cars = await cache.GetCarsAsync();
+            var cars = await cache.GetAsync();
             var branches = await cache.GetBranchesAsync();
 
             var data = from r in registries

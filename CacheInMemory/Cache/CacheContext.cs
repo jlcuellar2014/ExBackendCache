@@ -22,7 +22,7 @@ namespace CacheInMemory.Cache
             branches = await GetDataFromCacheAsync<Branch>(branches, dbContext.Branches);
             return branches ?? [];
         }
-        public async Task<List<Car>> GetCarsAsync()
+        public async Task<List<Car>> GetAsync()
         {
             cars = await GetDataFromCacheAsync<Car>(cars, dbContext.Cars);
             return cars ?? [];

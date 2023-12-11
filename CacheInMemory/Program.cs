@@ -11,12 +11,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddMemoryCache();
 builder.Services.AddScoped<IDataContext, DatabaseContext>();
 builder.Services.AddScoped<ICacheContext, CacheContext>();
+
 builder.Services.AddScoped<IBranchesRespository, BranchesRespository>();
+builder.Services.AddScoped<ICarsRepository, CarsRepository>();
 
-
-builder.Services.AddScoped<ICountriesService, CountriesService>();
 builder.Services.AddScoped<IBranchesService, BranchesService>();
 builder.Services.AddScoped<ICarsService, CarsService>();
+builder.Services.AddScoped<ICountriesService, CountriesService>();
 builder.Services.AddScoped<IRegisteredCarsService, RegisteredCarsService>();
 
 builder.Services.AddControllers();

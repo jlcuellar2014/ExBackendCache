@@ -9,7 +9,7 @@ namespace CacheInMemory.Cache
         void CleanCountriesCache();
         void CleanRegisteredCarCache();
         Task<List<Branch>> GetBranchesAsync();
-        Task<List<Car>> GetCarsAsync();
+        Task<List<Car>> GetAsync();
         Task<List<Country>> GetCountriesAsync();
         Task<List<RegisteredCar>> GetRegisteredCarsAsync();
     }
