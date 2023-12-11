@@ -1,5 +1,6 @@
 using CacheInMemory.Cache;
 using CacheInMemory.Model;
+using CacheInMemory.Repositories;
 using CacheInMemory.Services;
 using Swashbuckle.AspNetCore.Filters;
 
@@ -10,6 +11,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddMemoryCache();
 builder.Services.AddScoped<IDataContext, DatabaseContext>();
 builder.Services.AddScoped<ICacheContext, CacheContext>();
+builder.Services.AddScoped<IBranchesRespository, BranchesRespository>();
+
+
 builder.Services.AddScoped<ICountriesService, CountriesService>();
 builder.Services.AddScoped<IBranchesService, BranchesService>();
 builder.Services.AddScoped<ICarsService, CarsService>();

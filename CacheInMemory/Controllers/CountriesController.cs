@@ -8,6 +8,10 @@ namespace CacheInMemory.Controllers
     [ApiController]
     public class CountriesController(ICountriesService service) : ControllerBase
     {
+        [HttpGet("is-alive")]
+        public ActionResult IsAlive() => Ok();
+
+
         [HttpGet]
         public ActionResult<List<CountryReadDTO>> Get()
         {
