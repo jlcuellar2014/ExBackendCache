@@ -9,11 +9,11 @@ namespace CacheInMemory.Controllers
     public class BranchesController(IBranchesService service) : ControllerBase
     {
         [HttpGet]
-        public ActionResult<List<BranchReadDTO>> Get()
+        public ActionResult<List<BranchReadDTO>> GetAll()
         {
             try
             {
-                return Ok(service.GetBranches());
+                return Ok(service.GetAll());
             }
             catch (Exception)
             {
@@ -26,7 +26,7 @@ namespace CacheInMemory.Controllers
         {
             try
             {
-                await service.CreateBranchAsync(branch);
+                await service.CreateAsync(branch);
                 return Ok();
             }
             catch (Exception)
@@ -40,7 +40,7 @@ namespace CacheInMemory.Controllers
         {
             try
             {
-                await service.UpdateBranchAsync(branchName, branch);
+                await service.UpdateAsync(branchName, branch);
                 return Ok();
             }
             catch (ArgumentException ex)
@@ -58,7 +58,7 @@ namespace CacheInMemory.Controllers
         {
             try
             {
-                await service.DeleteBranchAsync(branchName);
+                await service.DeleteAsync(branchName);
                 return Ok();
             }
             catch (ArgumentException ex)

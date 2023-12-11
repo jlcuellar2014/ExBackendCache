@@ -4,9 +4,9 @@ namespace CacheInMemory.Services
 {
     public interface IBranchesService
     {
-        List<BranchReadDTO> GetBranches();
-        Task CreateBranchAsync(BranchCreateDTO branch);
-        Task DeleteBranchAsync(string branchName);
-        Task UpdateBranchAsync(string branchName, BranchUpdateDTO branch);
+        List<BranchReadDTO> GetAll();
+        Task CreateAsync(BranchCreateDTO branch);
+        Task DeleteAsync(string branchName);
+        Task UpdateAsync(string branchName, BranchUpdateDTO branch);
     }
 }

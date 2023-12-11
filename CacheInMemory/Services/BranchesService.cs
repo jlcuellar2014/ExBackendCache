@@ -5,18 +5,18 @@ using Mapster;
 
 namespace CacheInMemory.Services
 {
-    public class BranchesService(IBranchesRespository respository) : IBranchesService
+    public class BranchesService(IBranchesRespository repo) : IBranchesService
     {
-        public List<BranchReadDTO> GetBranches() 
-            => respository.GetBranches().Adapt<List<BranchReadDTO>>();
+        public List<BranchReadDTO> GetAll()
+            => repo.GetAll().Adapt<List<BranchReadDTO>>();
 
-        public async Task CreateBranchAsync(BranchCreateDTO branch)
-            => await respository.CreateBranchAsync(branch.Adapt<Branch>());
+        public async Task CreateAsync(BranchCreateDTO branch)
+            => await repo.CreateAsync(branch.Adapt<Branch>());
 
-        public async Task UpdateBranchAsync(string branchName, BranchUpdateDTO branch)
-            => await respository.UpdateBranchAsync(branchName, branch.Adapt<Branch>());
+        public async Task UpdateAsync(string branchName, BranchUpdateDTO branch)
+            => await repo.UpdateAsync(branchName, branch.Adapt<Branch>());
 
-        public async Task DeleteBranchAsync(string branchName)
-            => await respository.DeleteBranchAsync(branchName);
+        public async Task DeleteAsync(string branchName)
+            => await repo.DeleteAsync(branchName);
     }
 }

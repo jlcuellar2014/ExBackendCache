@@ -3,12 +3,11 @@ using CacheInMemory.Model;
 
 namespace CacheInMemory.Repositories
 {
-    public class BranchesRespository(ICacheContext cache, IDataContext data)
-        : IBranchesRespository
+    public class BranchesRespository(ICacheContext cache, IDataContext data) : IBranchesRespository
     {
-        public List<Branch> GetBranches() => cache.Branches;
+        public List<Branch> GetAll() => cache.GetBranches();
 
-        public async Task CreateBranchAsync(Branch newBranch)
+        public async Task CreateAsync(Branch newBranch)
         {
             try
             {
@@ -24,7 +23,7 @@ namespace CacheInMemory.Repositories
             }
         }
 
-        public async Task UpdateBranchAsync(string branchName, Branch branch)
+        public async Task UpdateAsync(string branchName, Branch branch)
         {
             try
             {
@@ -49,7 +48,7 @@ namespace CacheInMemory.Repositories
             }
         }
 
-        public async Task DeleteBranchAsync(string branchName)
+        public async Task DeleteAsync(string branchName)
         {
             try
             {
