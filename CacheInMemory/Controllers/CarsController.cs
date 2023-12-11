@@ -9,11 +9,11 @@ namespace CacheInMemory.Controllers
     public class CarsController(ICarsService service) : ControllerBase
     {
         [HttpGet]
-        public ActionResult<List<CarReadDTO>> Get()
+        public async Task<ActionResult<List<CarReadDTO>>> GetAsync()
         {
             try
             {
-                return Ok(service.GetCars());
+                return Ok(await service.GetCarsAsync());
             }
             catch (Exception)
             {
@@ -22,11 +22,11 @@ namespace CacheInMemory.Controllers
         }
 
         [HttpGet("search")]
-        public ActionResult<List<CarReadDTO>> GetByParams([FromQuery] CarSearchingDTO carSearching)
+        public async Task<ActionResult<List<CarReadDTO>>> GetByParamsAsync([FromQuery] CarSearchingDTO carSearching)
         {
             try
             {
-                return Ok(service.GetCarsByParams(carSearching));
+                return Ok(await service.GetCarsByParamsAsync(carSearching));
             }
             catch (Exception)
             {

@@ -9,11 +9,11 @@ namespace CacheInMemory.Controllers
     public class BranchesController(IBranchesService service) : ControllerBase
     {
         [HttpGet]
-        public ActionResult<List<BranchReadDTO>> GetAll()
+        public async Task<ActionResult<List<BranchReadDTO>>> GeAsync()
         {
             try
             {
-                return Ok(service.GetAll());
+                return Ok(await service.GeAsync());
             }
             catch (Exception)
             {

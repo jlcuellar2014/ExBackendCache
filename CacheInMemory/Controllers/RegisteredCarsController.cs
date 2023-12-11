@@ -9,11 +9,11 @@ namespace CacheInMemory.Controllers
     public class RegisteredCarsController(IRegisteredCarsService service) : ControllerBase
     {
         [HttpGet]
-        public ActionResult<List<RegisteredCarReadDTO>> Get()
+        public async Task<ActionResult<List<RegisteredCarReadDTO>>> GetAsync()
         {
             try
             {
-                return Ok(service.GetRegisteredCars());
+                return Ok(await service.GetRegisteredCarsAsync());
             }
             catch (Exception)
             {

@@ -1,4 +1,5 @@
 ﻿using CacheInMemory.Model;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using System.Text.Json;
 
@@ -11,33 +12,25 @@ namespace CacheInMemory.Cache
         private static List<Car>? cars;
         private static List<RegisteredCar>? registeredCars;
 
-        public List<Country> Countries {
-            get {
-                countries = GetDataFromCache<Country>(countries, () => dbContext.Countries.ToList());
-                return countries ?? [];
-            } 
-        }
-        public List<Branch> Branches {
-            get {
-                branches = GetDataFromCache<Branch>(branches, () => dbContext.Branches.ToList());
-                return branches ?? [];
-            }
-        }
-        public List<Car> Cars
+        public async Task<List<Country>> GetCountriesAsync()
         {
-            get
-            {
-                cars = GetDataFromCache<Car>(cars, () => dbContext.Cars.ToList());
-                return cars ?? [];
-            }
+            countries = await GetDataFromCacheAsync<Country>(countries, dbContext.Countries);
+            return countries ?? [];
         }
-        public List<RegisteredCar> RegisteredCars
+        public async Task<List<Branch>> GetBranchesAsync()
         {
-            get
-            {
-                registeredCars = GetDataFromCache<RegisteredCar>(registeredCars, () => dbContext.RegisteredCars.ToList());
-                return registeredCars ?? [];
-            }
+            branches = await GetDataFromCacheAsync<Branch>(branches, dbContext.Branches);
+            return branches ?? [];
+        }
+        public async Task<List<Car>> GetCarsAsync()
+        {
+            cars = await GetDataFromCacheAsync<Car>(cars, dbContext.Cars);
+            return cars ?? [];
+        }
+        public async Task<List<RegisteredCar>> GetRegisteredCarsAsync()
+        {
+            registeredCars = await GetDataFromCacheAsync<RegisteredCar>(registeredCars, dbContext.RegisteredCars);
+            return registeredCars ?? [];
         }
 
         public void CleanCountriesCache() => cache.Remove(nameof(Country));
@@ -45,13 +38,13 @@ namespace CacheInMemory.Cache
         public void CleanCarsCache() => cache.Remove(nameof(Car));
         public void CleanRegisteredCarCache() => cache.Remove(nameof(RegisteredCar));
 
-        private List<T>? GetDataFromCache<T>(List<T>? collection,  Func<List<T>?> func)
+        private async Task<List<T>?> GetDataFromCacheAsync<T>(List<T>? collection, DbSet<T> values) where T : class
         {
             var key = typeof(T).Name;
 
             if (!cache.TryGetValue(key, out string? dataInCache))
             {
-                collection = func.Invoke() ?? [];
+                collection = await values.ToListAsync();
 
                 var cacheEntryOptions = new MemoryCacheEntryOptions
                 {

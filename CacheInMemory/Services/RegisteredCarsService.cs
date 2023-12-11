@@ -6,16 +6,19 @@ namespace CacheInMemory.Services
 {
     public class RegisteredCarsService(ICacheContext cache, IDataContext data) : IRegisteredCarsService
     {
-        public List<RegisteredCarReadDTO> GetRegisteredCars()
+        public async Task<List<RegisteredCarReadDTO>> GetRegisteredCarsAsync()
         {
-            IEnumerable<RegisteredCar> registries = cache.RegisteredCars;
+            IEnumerable<RegisteredCar> registries = await cache.GetRegisteredCarsAsync();
 
             if (!registries.Any())
                 return [];
 
+            var cars = await cache.GetCarsAsync();
+            var branches = await cache.GetBranchesAsync();
+
             var data = from r in registries
-                       join c in cache.Cars on r.CarId equals c.CarId
-                       join b in cache.Branches on c.BranchId equals b.BranchId
+                       join c in cars on r.CarId equals c.CarId
+                       join b in branches on c.BranchId equals b.BranchId
                        select new RegisteredCarReadDTO
                        {
                            RegisteredCarId = r.RegisteredCarId,
@@ -37,7 +40,8 @@ namespace CacheInMemory.Services
         {
             try
             {
-                data.RegisteredCars.Add(new RegisteredCar {
+                data.RegisteredCars.Add(new RegisteredCar
+                {
                     CountryCode = registeredCar.CountryCode,
                     Owner = registeredCar.Owner,
                     RegistrationNumber = registeredCar.RegistrationNumber,
@@ -45,7 +49,7 @@ namespace CacheInMemory.Services
                 });
 
                 await data.SaveChangesAsync();
-                cache.RegisteredCars.Clear();
+                cache.CleanRegisteredCarCache();
             }
             catch (Exception)
             {
@@ -60,8 +64,8 @@ namespace CacheInMemory.Services
                 var oldRegisteredCar = data.RegisteredCars.Find(idRegisteredCar)
                     ?? throw new ArgumentException("There is no registry with this identification.", nameof(idRegisteredCar));
 
-                if(registeredCar.Owner != null)
-                oldRegisteredCar.Owner = registeredCar.Owner;
+                if (registeredCar.Owner != null)
+                    oldRegisteredCar.Owner = registeredCar.Owner;
 
                 if (registeredCar.RegistrationNumber != null)
                     oldRegisteredCar.RegistrationNumber = registeredCar.RegistrationNumber;
@@ -73,7 +77,7 @@ namespace CacheInMemory.Services
                     oldRegisteredCar.CountryCode = registeredCar.CountryCode;
 
                 await data.SaveChangesAsync();
-                cache.RegisteredCars.Clear();
+                cache.CleanRegisteredCarCache();
             }
             catch (Exception)
             {
@@ -85,13 +89,13 @@ namespace CacheInMemory.Services
         {
             try
             {
-                var oldRegisteredCar = data.RegisteredCars.Find(idRegisteredCar) 
+                var oldRegisteredCar = data.RegisteredCars.Find(idRegisteredCar)
                     ?? throw new ArgumentException("There is no registry with this identification.", nameof(idRegisteredCar));
 
                 data.RegisteredCars.Remove(oldRegisteredCar);
 
                 await data.SaveChangesAsync();
-                cache.RegisteredCars.Clear();
+                cache.CleanRegisteredCarCache();
             }
             catch (Exception)
             {

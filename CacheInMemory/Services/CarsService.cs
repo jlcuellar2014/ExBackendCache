@@ -7,11 +7,15 @@ namespace CacheInMemory.Services
 {
     public class CarsService(ICacheContext cache, IDataContext data) : ICarsService
     {
-        public List<CarReadDTO> GetCars() => cache.Cars.Adapt<List<CarReadDTO>>();
-
-        public List<CarReadDTO> GetCarsByParams(CarSearchingDTO carSearching)
+        public async Task<List<CarReadDTO>> GetCarsAsync()
         {
-            IEnumerable<Car> query = cache.Cars;
+            var cars = await cache.GetCarsAsync();
+            return cars.Adapt<List<CarReadDTO>>();
+        }
+
+        public async Task<List<CarReadDTO>> GetCarsByParamsAsync(CarSearchingDTO carSearching)
+        {
+            IEnumerable<Car> query = await cache.GetCarsAsync();
 
             if (carSearching.CarId.GetValueOrDefault() > 0)
             {
@@ -39,8 +43,9 @@ namespace CacheInMemory.Services
 
             if (carSearching.BranchName != null)
             {
+                var branches = await cache.GetBranchesAsync();
                 query = query.Where(x
-                    => (cache.Branches
+                    => (branches
                              .Where(b => b.Name.ToUpper().Contains(carSearching.BranchName.ToUpper()))
                              .Select(b => b.BranchId)
                         )
@@ -56,8 +61,9 @@ namespace CacheInMemory.Services
 
             if (carSearching.CountryName != null)
             {
+                var countrie = await cache.GetCountriesAsync();
                 query = query.Where(x
-                    => (cache.Countries
+                    => (countrie
                              .Where(b => b.CountryName.ToUpper().Contains(carSearching.CountryName.ToUpper()))
                              .Select(b => b.CountryCode)
                         )

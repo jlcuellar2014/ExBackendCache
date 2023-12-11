@@ -13,11 +13,11 @@ namespace CacheInMemory.Controllers
 
 
         [HttpGet]
-        public ActionResult<List<CountryReadDTO>> Get()
+        public async Task<ActionResult<List<CountryReadDTO>>> GetAsync()
         {
             try
             {
-                return Ok(service.GetCountries());
+                return Ok(await service.GetCountriesAsync());
             }
             catch (Exception)
             {
