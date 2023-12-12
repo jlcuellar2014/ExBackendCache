@@ -15,7 +15,7 @@ namespace CacheInMemory.Repositories
 
                 await data.SaveChangesAsync();
 
-                cache.CleanBranchesCache();
+                cache.ResetBranches();
             }
             catch (Exception)
             {
@@ -40,7 +40,7 @@ namespace CacheInMemory.Repositories
                     oldBranch.CountryCode = branch.CountryCode ?? string.Empty;
 
                 await data.SaveChangesAsync();
-                cache.CleanBranchesCache();
+                cache.ResetBranches();
             }
             catch (Exception)
             {
@@ -58,7 +58,7 @@ namespace CacheInMemory.Repositories
                 data.Branches.Remove(oldBranch);
 
                 await data.SaveChangesAsync();
-                cache.CleanBranchesCache();
+                cache.ResetBranches();
             }
             catch (Exception)
             {

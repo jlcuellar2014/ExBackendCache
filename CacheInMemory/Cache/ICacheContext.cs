@@ -4,13 +4,13 @@ namespace CacheInMemory.Cache
 {
     public interface ICacheContext
     {
-        void CleanBranchesCache();
-        void CleanCarsCache();
-        void CleanCountriesCache();
-        void CleanRegisteredCarCache();
+        void ResetBranches();
+        void ResetCars();
+        void ResetCountries();
+        void ResetRegisteredCars();
         Task<List<Branch>> GetBranchesAsync();
-        Task<List<Car>> GetAsync();
+        Task<List<Car>> GetCarsAsync();
         Task<List<Country>> GetCountriesAsync();
-        Task<List<RegisteredCar>> GetRegisteredCarsAsync();
+        Task<List<RegisteredCar>> GetAsync();
     }
 }

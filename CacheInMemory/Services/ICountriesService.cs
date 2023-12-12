@@ -4,6 +4,6 @@ namespace CacheInMemory.Services
 {
     public interface ICountriesService
     {
-        Task<List<CountryReadDTO>> GetCountriesAsync();
+        Task<List<CountryReadDTO>> GetAsync();
     }
 }

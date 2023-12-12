@@ -14,6 +14,8 @@ builder.Services.AddScoped<ICacheContext, CacheContext>();
 
 builder.Services.AddScoped<IBranchesRespository, BranchesRespository>();
 builder.Services.AddScoped<ICarsRepository, CarsRepository>();
+builder.Services.AddScoped<ICountriesRepository, CountriesRepository>();
+builder.Services.AddScoped<IRegisteredCarsRepository, RegisteredCarsRepository>();
 
 builder.Services.AddScoped<IBranchesService, BranchesService>();
 builder.Services.AddScoped<ICarsService, CarsService>();

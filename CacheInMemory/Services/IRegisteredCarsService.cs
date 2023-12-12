@@ -4,9 +4,9 @@ namespace CacheInMemory.Services
 {
     public interface IRegisteredCarsService
     {
-        Task CreateRegisteredCarAsync(RegisteredCarCreateDTO registeredCar);
-        Task DeleteRegisteredCarAsync(int idRegisteredCar);
-        Task<List<RegisteredCarReadDTO>> GetRegisteredCarsAsync();
-        Task UpdateRegisteredCarAsync(int idRegisteredCar, RegisteredCarUpdateDTO registeredCar);
+        Task CreateAsync(RegisteredCarCreateDTO registeredCar);
+        Task DeleteAsync(int idRegisteredCar);
+        Task<List<RegisteredCarReadDTO>> GetAsync();
+        Task UpdateAsync(int idRegisteredCar, RegisteredCarUpdateDTO registeredCar);
     }
 }

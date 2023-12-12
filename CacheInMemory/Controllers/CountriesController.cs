@@ -17,7 +17,7 @@ namespace CacheInMemory.Controllers
         {
             try
             {
-                return Ok(await service.GetCountriesAsync());
+                return Ok(await service.GetAsync());
             }
             catch (Exception)
             {

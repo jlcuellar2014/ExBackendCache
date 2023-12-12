@@ -22,21 +22,21 @@ namespace CacheInMemory.Cache
             branches = await GetDataFromCacheAsync<Branch>(branches, dbContext.Branches);
             return branches ?? [];
         }
-        public async Task<List<Car>> GetAsync()
+        public async Task<List<Car>> GetCarsAsync()
         {
             cars = await GetDataFromCacheAsync<Car>(cars, dbContext.Cars);
             return cars ?? [];
         }
-        public async Task<List<RegisteredCar>> GetRegisteredCarsAsync()
+        public async Task<List<RegisteredCar>> GetAsync()
         {
             registeredCars = await GetDataFromCacheAsync<RegisteredCar>(registeredCars, dbContext.RegisteredCars);
             return registeredCars ?? [];
         }
 
-        public void CleanCountriesCache() => cache.Remove(nameof(Country));
-        public void CleanBranchesCache() => cache.Remove(nameof(Branch));
-        public void CleanCarsCache() => cache.Remove(nameof(Car));
-        public void CleanRegisteredCarCache() => cache.Remove(nameof(RegisteredCar));
+        public void ResetCountries() => cache.Remove(nameof(Country));
+        public void ResetBranches() => cache.Remove(nameof(Branch));
+        public void ResetCars() => cache.Remove(nameof(Car));
+        public void ResetRegisteredCars() => cache.Remove(nameof(RegisteredCar));
 
         private async Task<List<T>?> GetDataFromCacheAsync<T>(List<T>? collection, DbSet<T> values) where T : class
         {

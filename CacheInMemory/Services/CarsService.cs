@@ -1,5 +1,6 @@
 ﻿using CacheInMemory.DTOs;
 using CacheInMemory.Model;
+using CacheInMemory.Records;
 using CacheInMemory.Repositories;
 using Mapster;
 
@@ -15,7 +16,7 @@ namespace CacheInMemory.Services
 
         public async Task<List<CarReadDTO>> GetByParamsAsync(CarSearchingDTO carSearching)
         {
-            var cars = await repo.GetByParamsAsync(carSearching);
+            var cars = await repo.GetByParamsAsync(carSearching.Adapt<CarSearchingRecord>());
             return cars.Adapt<List<CarReadDTO>>();
         }
 

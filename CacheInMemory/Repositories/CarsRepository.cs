@@ -1,17 +1,17 @@
 ﻿using CacheInMemory.Cache;
-using CacheInMemory.DTOs;
 using CacheInMemory.Model;
+using CacheInMemory.Records;
 
 namespace CacheInMemory.Repositories
 {
     public class CarsRepository(ICacheContext cache, IDataContext data) : ICarsRepository
     {
         public async Task<List<Car>> GetAsync()
-            => await cache.GetAsync();
+            => await cache.GetCarsAsync();
 
-        public async Task<List<Car>> GetByParamsAsync(CarSearchingDTO carSearching)
+        public async Task<List<Car>> GetByParamsAsync(CarSearchingRecord carSearching)
         {
-            IEnumerable<Car> query = await cache.GetAsync();
+            IEnumerable<Car> query = await cache.GetCarsAsync();
 
             if (carSearching.CarId.GetValueOrDefault() > 0)
             {
@@ -78,7 +78,7 @@ namespace CacheInMemory.Repositories
 
                 await data.SaveChangesAsync();
 
-                cache.CleanCarsCache();
+                cache.ResetCars();
             }
             catch (Exception)
             {
@@ -107,7 +107,7 @@ namespace CacheInMemory.Repositories
 
                 await data.SaveChangesAsync();
 
-                cache.CleanCarsCache();
+                cache.ResetCars();
             }
             catch (Exception)
             {
@@ -126,7 +126,7 @@ namespace CacheInMemory.Repositories
 
                 await data.SaveChangesAsync();
 
-                cache.CleanCarsCache();
+                cache.ResetCars();
             }
             catch (Exception)
             {
