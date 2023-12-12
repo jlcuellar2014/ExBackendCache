@@ -1,6 +1,7 @@
 ﻿using CacheInMemory.DTOs;
 using CacheInMemory.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace CacheInMemory.Controllers
 {
@@ -9,6 +10,8 @@ namespace CacheInMemory.Controllers
     public class BranchesController(IBranchesService service) : ControllerBase
     {
         [HttpGet]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(List<BranchReadDTO>), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<List<BranchReadDTO>>> GeAsync()
         {
             try
@@ -22,6 +25,8 @@ namespace CacheInMemory.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<ActionResult> PostAsync(BranchCreateDTO branch)
         {
             try
@@ -36,6 +41,8 @@ namespace CacheInMemory.Controllers
         }
 
         [HttpPatch("{branchName}")]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<ActionResult> PatchAsync(string branchName, BranchUpdateDTO branch)
         {
             try
@@ -54,6 +61,8 @@ namespace CacheInMemory.Controllers
         }
 
         [HttpDelete("{branchName}")]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<ActionResult> PatchAsync(string branchName)
         {
             try
