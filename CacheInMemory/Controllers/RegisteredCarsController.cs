@@ -1,6 +1,7 @@
 ﻿using CacheInMemory.DTOs;
 using CacheInMemory.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace CacheInMemory.Controllers
 {
@@ -9,7 +10,9 @@ namespace CacheInMemory.Controllers
     public class RegisteredCarsController(IRegisteredCarsService service) : ControllerBase
     {
         [HttpGet]
-        public async Task<ActionResult<List<RegisteredCarReadDTO>>> GetAsync()
+        [ProducesResponseType(typeof(string), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(List<RegisteredCarReadDTO>), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult> GetAsync()
         {
             try
             {
@@ -22,6 +25,8 @@ namespace CacheInMemory.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(typeof(string), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<ActionResult> PostAsync(RegisteredCarCreateDTO registeredCar)
         {
             try
@@ -40,6 +45,8 @@ namespace CacheInMemory.Controllers
         }
 
         [HttpPatch("{idRegister}")]
+        [ProducesResponseType(typeof(string), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<ActionResult> PatchAsync(int idRegister, RegisteredCarUpdateDTO registeredCar)
         {
             try
@@ -58,6 +65,8 @@ namespace CacheInMemory.Controllers
         }
 
         [HttpDelete("{idRegister}")]
+        [ProducesResponseType(typeof(string), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<ActionResult> DeleteAsync(int idRegister)
         {
             try

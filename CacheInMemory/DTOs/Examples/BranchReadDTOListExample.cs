@@ -2,7 +2,7 @@
 
 namespace CacheInMemory.DTOs.Examples
 {
-    public class BranchReadDTOExample : IExamplesProvider<List<BranchReadDTO>>
+    public class BranchReadDTOListExample : IExamplesProvider<List<BranchReadDTO>>
     {
         public List<BranchReadDTO> GetExamples()
         {
