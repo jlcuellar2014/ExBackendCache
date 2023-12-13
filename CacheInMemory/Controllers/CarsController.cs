@@ -1,7 +1,6 @@
 ﻿using CacheInMemory.DTOs;
 using CacheInMemory.Services;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
 
 namespace CacheInMemory.Controllers
 {
@@ -10,9 +9,7 @@ namespace CacheInMemory.Controllers
     public class CarsController(ICarsService service) : ControllerBase
     {
         [HttpGet]
-        [ProducesResponseType(typeof(string), (int)HttpStatusCode.BadRequest)]
-        [ProducesResponseType(typeof(List<CarReadDTO>), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult> GetAsync()
+        public async Task<ActionResult<List<CarReadDTO>>> GetAsync()
         {
             try
             {
@@ -25,9 +22,7 @@ namespace CacheInMemory.Controllers
         }
 
         [HttpGet("search")]
-        [ProducesResponseType(typeof(string), (int)HttpStatusCode.BadRequest)]
-        [ProducesResponseType(typeof(List<CarReadDTO>), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult> GetByParamsAsync([FromQuery] CarSearchingDTO carSearching)
+        public async Task<ActionResult<List<CarReadDTO>>> GetByParamsAsync([FromQuery] CarSearchingDTO carSearching)
         {
             try
             {
@@ -40,9 +35,7 @@ namespace CacheInMemory.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(typeof(string), (int)HttpStatusCode.BadRequest)]
-        [ProducesResponseType((int)HttpStatusCode.OK)]
-        public async Task<ActionResult> PostAsync(CarCreateDTO car)
+        public async Task<ActionResult<List<CarReadDTO>>> PostAsync(CarCreateDTO car)
         {
             try
             {
@@ -60,9 +53,7 @@ namespace CacheInMemory.Controllers
         }
 
         [HttpPatch("{carId}")]
-        [ProducesResponseType(typeof(string), (int)HttpStatusCode.BadRequest)]
-        [ProducesResponseType((int)HttpStatusCode.OK)]
-        public async Task<ActionResult> PatchAsync(int carId, CarUpdateDTO car)
+        public async Task<ActionResult<List<CarReadDTO>>> PatchAsync(int carId, CarUpdateDTO car)
         {
             try
             {

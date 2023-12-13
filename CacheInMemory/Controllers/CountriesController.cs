@@ -1,7 +1,6 @@
 ﻿using CacheInMemory.DTOs;
 using CacheInMemory.Services;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
 
 namespace CacheInMemory.Controllers
 {
@@ -14,9 +13,7 @@ namespace CacheInMemory.Controllers
 
 
         [HttpGet]
-        [ProducesResponseType(typeof(string), (int)HttpStatusCode.BadRequest)]
-        [ProducesResponseType(typeof(List<CountryReadDTO>), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult> GetAsync()
+        public async Task<ActionResult<List<CountryReadDTO>>> GetAsync()
         {
             try
             {
