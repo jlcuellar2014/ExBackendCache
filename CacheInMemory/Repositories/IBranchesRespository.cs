@@ -6,7 +6,7 @@ namespace CacheInMemory.Repositories
     {
         Task CreateAsync(Branch newBranch);
         Task DeleteAsync(string branchName);
-        Task<List<Branch>> GeAsync();
+        Task<List<Branch>> GetAsync();
         Task UpdateAsync(string branchName, Branch branch);
     }
 }

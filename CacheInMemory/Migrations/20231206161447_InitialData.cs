@@ -36,7 +36,7 @@ namespace CacheInMemory.Migrations
                 table: "Cars",
                 columns: new[] { "CarId", "BranchId", "CountryCode", "Name", "Description" },
                 values: new object[,] {
-                    { 1, 1, "DE", "EQS Berlina", "La elegancia de un coupé unida a la espaciosidad de una berlina. Descubre el exterior del EQS Berlina."}
+                    { 1, 1, "DE", "EQS Berlina", "La elegancia de un coupé unida a la espaciosidad de una berlina."}
                 }
             );
         }

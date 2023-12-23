@@ -1,6 +1,6 @@
 ﻿namespace CacheInMemory.Records
 {
-    public class RegisteredCarRecord
+    public record RegisteredCarRecord
     {
         public int RegisteredCarId { get; set; }
         public string? RegistrationCountry { get; set; }

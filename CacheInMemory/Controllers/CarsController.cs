@@ -10,7 +10,7 @@ namespace CacheInMemory.Controllers
     public class CarsController(ICarsService service) : ControllerBase
     {
         [HttpGet]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(BadRequestDTO), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(List<CarReadDTO>), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<List<CarReadDTO>>> GetAsync()
         {
@@ -20,12 +20,12 @@ namespace CacheInMemory.Controllers
             }
             catch (Exception)
             {
-                return BadRequest();
+                return BadRequest(new BadRequestDTO());
             }
         }
 
         [HttpGet("search")]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(BadRequestDTO), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(List<CarReadDTO>), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<List<CarReadDTO>>> GetByParamsAsync([FromQuery] CarSearchingDTO carSearching)
         {
@@ -35,12 +35,12 @@ namespace CacheInMemory.Controllers
             }
             catch (Exception)
             {
-                return BadRequest();
+                return BadRequest(new BadRequestDTO());
             }
         }
 
         [HttpPost]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(BadRequestDTO), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<ActionResult> PostAsync(CarCreateDTO car)
         {
@@ -51,16 +51,16 @@ namespace CacheInMemory.Controllers
             }
             catch (ArgumentException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(new BadRequestDTO{ Message = ex.Message });
             }
             catch (Exception)
             {
-                return BadRequest();
+                return BadRequest(new BadRequestDTO());
             }
         }
 
         [HttpPatch("{carId}")]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(BadRequestDTO), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<ActionResult> PatchAsync(int carId, CarUpdateDTO car)
         {
@@ -71,11 +71,11 @@ namespace CacheInMemory.Controllers
             }
             catch (ArgumentException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(new BadRequestDTO{ Message = ex.Message });
             }
             catch (Exception)
             {
-                return BadRequest();
+                return BadRequest(new BadRequestDTO());
             }
         }
     }

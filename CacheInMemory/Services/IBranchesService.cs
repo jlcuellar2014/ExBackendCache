@@ -6,7 +6,7 @@ namespace CacheInMemory.Services
     {
         Task CreateAsync(BranchCreateDTO branch);
         Task DeleteAsync(string branchName);
-        Task<List<BranchReadDTO>> GeAsync();
+        Task<List<BranchReadDTO>> GetAsync();
         Task UpdateAsync(string branchName, BranchUpdateDTO branch);
     }
 }

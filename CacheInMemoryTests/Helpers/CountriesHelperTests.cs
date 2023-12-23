@@ -2,7 +2,7 @@
 
 namespace CacheInMemoryTests.Helpers
 {
-    public class CountriesHelper_GetCountriesFromStaticCsv
+    public class CountriesHelperTests
     {
         [Theory]
         [InlineData("Resources\\countries_es.csv")]

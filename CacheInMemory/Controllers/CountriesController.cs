@@ -14,7 +14,7 @@ namespace CacheInMemory.Controllers
 
 
         [HttpGet]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(BadRequestDTO), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(List<CountryReadDTO>), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<List<CountryReadDTO>>> GetAsync()
         {
@@ -24,7 +24,7 @@ namespace CacheInMemory.Controllers
             }
             catch (Exception)
             {
-                return BadRequest();
+                return BadRequest(new BadRequestDTO());
             }
         }
     }

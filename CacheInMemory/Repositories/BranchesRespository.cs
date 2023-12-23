@@ -5,7 +5,7 @@ namespace CacheInMemory.Repositories
 {
     public class BranchesRespository(ICacheContext cache, IDataContext data) : IBranchesRespository
     {
-        public async Task<List<Branch>> GeAsync() => await cache.GetBranchesAsync();
+        public async Task<List<Branch>> GetAsync() => await cache.GetBranchesAsync();
 
         public async Task CreateAsync(Branch newBranch)
         {

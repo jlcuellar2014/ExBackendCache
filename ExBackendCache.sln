@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34322.80
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CacheInMemory", "CacheInMemory\CacheInMemory.csproj", "{CF8EF5E7-37D1-45ED-B392-9888A878E843}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CacheInMemory", "CacheInMemory\CacheInMemory.csproj", "{CF8EF5E7-37D1-45ED-B392-9888A878E843}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CacheInMemoryTests", "CacheInMemoryTests\CacheInMemoryTests.csproj", "{8007ED33-ABB2-4271-8BD1-CB43B16B7E06}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CacheInMemory.Tests", "CacheInMemoryTests\CacheInMemory.Tests.csproj", "{8007ED33-ABB2-4271-8BD1-CB43B16B7E06}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

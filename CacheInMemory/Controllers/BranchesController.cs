@@ -10,22 +10,22 @@ namespace CacheInMemory.Controllers
     public class BranchesController(IBranchesService service) : ControllerBase
     {
         [HttpGet]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(BadRequestDTO), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(List<BranchReadDTO>), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<List<BranchReadDTO>>> GeAsync()
+        public async Task<ActionResult<List<BranchReadDTO>>> GetAsync()
         {
             try
             {
-                return Ok(await service.GeAsync());
+                return Ok(await service.GetAsync());
             }
             catch (Exception)
             {
-                return BadRequest();
+                return BadRequest(new BadRequestDTO());
             }
         }
 
         [HttpPost]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(BadRequestDTO), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<ActionResult> PostAsync(BranchCreateDTO branch)
         {
@@ -36,12 +36,12 @@ namespace CacheInMemory.Controllers
             }
             catch (Exception)
             {
-                return BadRequest();
+                return BadRequest(new BadRequestDTO());
             }
         }
 
         [HttpPatch("{branchName}")]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(BadRequestDTO), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<ActionResult> PatchAsync(string branchName, BranchUpdateDTO branch)
         {
@@ -52,16 +52,16 @@ namespace CacheInMemory.Controllers
             }
             catch (ArgumentException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(new BadRequestDTO{ Message = ex.Message });
             }
             catch (Exception)
             {
-                return BadRequest();
+                return BadRequest(new BadRequestDTO());
             }
         }
 
         [HttpDelete("{branchName}")]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(BadRequestDTO), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<ActionResult> PatchAsync(string branchName)
         {
@@ -72,11 +72,11 @@ namespace CacheInMemory.Controllers
             }
             catch (ArgumentException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(new BadRequestDTO{ Message = ex.Message });
             }
             catch (Exception)
             {
-                return BadRequest();
+                return BadRequest(new BadRequestDTO());
             }
         }
     }

@@ -1,6 +1,6 @@
 ﻿namespace CacheInMemory.Records
 {
-    public class CarSearchingRecord
+    public record CarSearchingRecord
     {
         public int? CarId { get; set; }
         public string? CarName { get; set; }

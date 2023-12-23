@@ -7,9 +7,9 @@ namespace CacheInMemory.Services
 {
     public class BranchesService(IBranchesRespository repo) : IBranchesService
     {
-        public async Task<List<BranchReadDTO>> GeAsync()
+        public async Task<List<BranchReadDTO>> GetAsync()
         {
-            var branches = await repo.GeAsync();
+            var branches = await repo.GetAsync();
             return branches.Adapt<List<BranchReadDTO>>();
         }
 
